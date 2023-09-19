@@ -1,7 +1,7 @@
 {
   "name": "svg-preview-pro",
-  "version": "0.0.4",
-  "description": "",
+  "version": "0.0.5",
+  "description": "start a local sever to preview svg directory.",
   "main": "./dist/index.mjs",
   "keywords": ["svg", "preview"],
   "author": "eloen",
