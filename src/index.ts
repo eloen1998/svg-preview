@@ -1,38 +1,52 @@
-import path from 'path'
-import fs from 'fs'
-import express from 'express'
-import render from './core/index'
+import app from './server'
+import pc from 'picocolors'
+import { version } from '../package.json'
 import { findPort } from './utils/findPort'
+import { DEFAULT_PORT } from './config'
 
-const app = express()
-const defaultPort = 7846
+const args = process.argv.slice(2)
 
-const baseDir = process.cwd()
+if (args.length === 1 && ['-v', '--version'].includes(args[0]) ) {
+    console.log(`v${version}`)
+    process.exit()
+}
 
-app.get('/favicon.ico', (req, res) => {
-    res.sendStatus(404)
-})
+if (args.length === 1 && ['-h', '--help'].includes(args[0])) {
+    console.log(pc.green(pc.bold('svg-preview-pro')) + pc.dim(' preview svg files in one page.\n'))
+    console.log(pc.bgCyan(`svg-preview --port ${DEFAULT_PORT} (by default)`))
+    console.log(pc.yellow('\ncheck https://github.com/eloen1998/svg-preview for more documentation.'))
+    process.exit()
+}
 
-app.get('/*', (req, res) => {
-    try {
-        const dirPath = path.join(baseDir, req.url)
-        const stat = fs.statSync(dirPath)
-        
-        if (stat.isDirectory()) {
-            const html = render(dirPath)
-            res.send(html)
-        }
-        if (stat.isFile()) {
-            const stream = fs.createReadStream(dirPath)
-            stream.pipe(res)
-        }
-    } catch (err) {
-        res.sendStatus(404)
-    }
-})
-
-findPort(defaultPort).then((port) => {
+let port
+if (['-p', '--port'].includes(args[0])) {
+    port = parseInt(args[2])
+}
+findPort(port || DEFAULT_PORT).then((port) => {
     app.listen(port, () => {
-        console.log(`Server is running on http://localhost:${port}`)
+        console.log('Server is running on:')
+        console.log(pc.yellow(`                     ${pc.underline(`http://localhost:${port}`)}\n`))
+        // console.log(pc.yellow(`                     ${pc.underline(`http://127.0.0.1:${port}`)}\n`))
+        // console.log(
+        //     pc.dim(pc.green('  ➜')) +
+        //       pc.dim('  press ') +
+        //       pc.bold('s') +
+        //       pc.dim(' to show server directory path.')
+        // )
     })
 })
+
+const onInput = async (input: string) => {
+    // ctrl+c or ctrl+d
+    if (input === '\x03' || input === '\x04') {
+        process.exit(1)
+    }
+
+    if (input === 's') {
+        console.log(`   Server directory path is: ${pc.underline(process.cwd())}`)
+    }
+}
+
+process.stdin.setRawMode(true)
+
+process.stdin.on('data', onInput).setEncoding('utf8').resume()

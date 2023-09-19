@@ -5,7 +5,7 @@ Preview all svg in one page.
 <br>
 
 <pre>
-npm i <b>svg-preview-pro</b> --globa
+npm i <b>svg-preview-pro</b> --global
 </pre>
 
 
@@ -21,7 +21,7 @@ svg-preview
 open http://localhost:7846
 </pre>
 
-![使用示例](https://raw.githubusercontent.com/eloen1998/svg-preview/main/static/preview.jpg)
+![使用示例](static/preview.jpg)
 
 
 ## License

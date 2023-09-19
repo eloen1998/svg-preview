@@ -1,9 +1,12 @@
 {
   "name": "svg-preview-pro",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "start a local sever to preview svg directory.",
   "main": "./dist/index.mjs",
-  "keywords": ["svg", "preview"],
+  "keywords": [
+    "svg",
+    "preview"
+  ],
   "author": "eloen",
   "license": "MIT",
   "homepage": "https://github.com/eloen1998/svg-preview#readme",
@@ -19,6 +22,9 @@
     "bin",
     "package.json"
   ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "build-dev": "tsup src/index.ts src/test.ts --format esm --clean",
     "build": "tsup",
@@ -31,6 +37,7 @@
   "dependencies": {
     "cheerio": "1.0.0-rc.12",
     "express": "^4.18.2",
+    "picocolors": "^1.0.0",
     "svgo": "^3.0.2"
   },
   "devDependencies": {
