@@ -7,7 +7,7 @@ export function renderHtml(content: string, folders: string) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>SVG PREVIEW</title>
         <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css" />
-        <script src="https://unpkg.com/vue@next"></script>
+        <script src="https://unpkg.com/vue"></script>
         <script src="https://unpkg.com/element-plus"></script>
         <style>
           html {
